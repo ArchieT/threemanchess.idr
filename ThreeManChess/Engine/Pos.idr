@@ -93,3 +93,29 @@ proveMinusPlusReduce (_, (SecondHalf, FirstHalf, FirstHalf)) = Refl
 proveMinusPlusReduce (_, (SecondHalf, FirstHalf, SecondHalf)) = Refl
 proveMinusPlusReduce (_, (SecondHalf, SecondHalf, FirstHalf)) = Refl
 proveMinusPlusReduce (_, (SecondHalf, SecondHalf, SecondHalf)) = Refl
+
+inw : Rank -> Rank
+inw MostOuter = SecondOuter
+inw SecondOuter = MiddleOuter
+inw MiddleOuter = MiddleInner
+inw MiddleInner = SecondInner
+inw SecondInner = MostInner
+inw MostInner = MostInner
+out : (x : Rank) -> Not (x = MostOuter) -> Rank
+out MostInner _ = SecondInner
+out SecondInner _ = MiddleInner
+out MiddleInner _ = MiddleOuter
+out MiddleOuter _ = SecondOuter
+out SecondOuter _ = MostOuter
+proveInwOutReduce : (x : Rank) -> Not (x = MostInner) -> x = (out (inw x) p)
+proveInwOutReduce MostOuter _ = ?inwoutmostouter
+proveInwOutReduce SecondOuter _ = ?inwoutsecondouter
+proveInwOutReduce MiddleOuter _ = ?inwoutmiddleouter
+proveInwOutReduce MiddleInner _ = ?inwoutmiddleinner
+proveInwOutReduce SecondInner _ = ?inwoutsecondinner
+proveOutInwReduce : (x : Rank) -> (p : Not (x = MostOuter)) -> x = (inw (out x p))
+proveOutInwReduce SecondOuter _ = ?outinwsecondouter
+proveOutInwReduce MiddleOuter _ = ?outinwmiddleouter
+proveOutInwReduce MiddleInner _ = ?outinwmiddleinner
+proveOutInwReduce SecondInner _ = ?outinwsecondinner
+proveOutInwReduce MostOuter _ = ?outinwmostouter
