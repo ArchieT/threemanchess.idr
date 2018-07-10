@@ -15,6 +15,11 @@ next Black = White
 prev : Color -> Color
 prev a = next $ next a
 
+proofofNextBeingCyclic : (x : Color) -> x = (next (next (next x)))
+proofofNextBeingCyclic White = Refl
+proofofNextBeingCyclic Gray = Refl
+proofofNextBeingCyclic Black = Refl
+
 data SegmentHalf = FirstHalf | SecondHalf
 
 otherSegmHalf : SegmentHalf -> SegmentHalf
@@ -70,3 +75,21 @@ provePlusToMinusSegmFile (_, (SecondHalf, FirstHalf, FirstHalf)) = Refl
 provePlusToMinusSegmFile (_, (SecondHalf, FirstHalf, SecondHalf)) = Refl
 provePlusToMinusSegmFile (_, (SecondHalf, SecondHalf, FirstHalf)) = Refl
 provePlusToMinusSegmFile (_, (SecondHalf, SecondHalf, SecondHalf)) = Refl
+provePlusMinusReduce : (x : Pos.File) -> x = (minus (plus x))
+provePlusMinusReduce (_, (FirstHalf, FirstHalf, FirstHalf)) = Refl
+provePlusMinusReduce (_, (FirstHalf, FirstHalf, SecondHalf)) = Refl
+provePlusMinusReduce (_, (FirstHalf, SecondHalf, FirstHalf)) = Refl
+provePlusMinusReduce (_, (FirstHalf, SecondHalf, SecondHalf)) = Refl
+provePlusMinusReduce (_, (SecondHalf, FirstHalf, FirstHalf)) = Refl
+provePlusMinusReduce (_, (SecondHalf, FirstHalf, SecondHalf)) = Refl
+provePlusMinusReduce (_, (SecondHalf, SecondHalf, FirstHalf)) = Refl
+provePlusMinusReduce (c, (SecondHalf, SecondHalf, SecondHalf)) = rewrite proofofNextBeingCyclic c in Refl
+proveMinusPlusReduce : (x : Pos.File) -> x = (plus (minus x))
+proveMinusPlusReduce (c, (FirstHalf, FirstHalf, FirstHalf)) = rewrite proofofNextBeingCyclic c in Refl
+proveMinusPlusReduce (_, (FirstHalf, FirstHalf, SecondHalf)) = Refl
+proveMinusPlusReduce (_, (FirstHalf, SecondHalf, FirstHalf)) = Refl
+proveMinusPlusReduce (_, (FirstHalf, SecondHalf, SecondHalf)) = Refl
+proveMinusPlusReduce (_, (SecondHalf, FirstHalf, FirstHalf)) = Refl
+proveMinusPlusReduce (_, (SecondHalf, FirstHalf, SecondHalf)) = Refl
+proveMinusPlusReduce (_, (SecondHalf, SecondHalf, FirstHalf)) = Refl
+proveMinusPlusReduce (_, (SecondHalf, SecondHalf, SecondHalf)) = Refl
