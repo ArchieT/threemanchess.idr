@@ -119,3 +119,6 @@ proveOutInwReduce MiddleOuter _ = ?outinwmiddleouter
 proveOutInwReduce MiddleInner _ = ?outinwmiddleinner
 proveOutInwReduce SecondInner _ = ?outinwsecondinner
 proveOutInwReduce MostOuter _ = ?outinwmostouter
+
+kfm : SegmentEight
+kfm = (SecondHalf, FirstHalf, FirstHalf)
