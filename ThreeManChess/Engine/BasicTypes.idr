@@ -1,4 +1,4 @@
-module ThreeManChess.Engine.Pos
+module ThreeManChess.Engine.BasicTypes
 
 data NatRange : Nat -> Nat -> Type where
      MkNatRange : (x : Nat) -> LTE n x -> LTE x m -> NatRange n m
@@ -48,7 +48,7 @@ opposite (c, (h, q, e)) = ((case h of FirstHalf => next
                                       SecondHalf => prev) c,
                            (otherSegmHalf h, q, e))
 
-minus : Pos.File -> Pos.File
+minus : File -> File
 minus (c, (FirstHalf, FirstHalf, FirstHalf)) =
       (prev c, (SecondHalf, SecondHalf, SecondHalf))
 minus (c, (x, y, SecondHalf)) = (c, (x, y, FirstHalf))
@@ -122,3 +122,9 @@ proveOutInwReduce MostOuter _ = ?outinwmostouter
 
 kfm : SegmentEight
 kfm = (SecondHalf, FirstHalf, FirstHalf)
+
+data FilewiseDirection = Pluswards | Minuswards
+data RankwiseDirection = Inwards | Outwards
+-- type DiagonalDirection = (RankwiseDirection, FilewiseDirection)
+DiagonalDirection : RankwiseDirection => Type
+DiagonalDirection rd = (rd, FilewiseDirection)
